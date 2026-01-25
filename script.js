@@ -1,3 +1,6 @@
+// Initialize EmailJS
+emailjs.init('wQNdYyF0gLRW8yCvL');
+
 // Dark mode detection and toggle
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
     document.documentElement.classList.add('dark');
@@ -80,8 +83,32 @@ function initFormHandlers() {
             e.preventDefault();
             const formData = new FormData(this);
             const name = formData.get('name');
-            showModal('Booking Request Sent!', `Thank you, ${name}! Your booking request has been received. I'll get back to you within 24 hours.`);
-            this.reset();
+            const email = formData.get('email');
+            const phone = formData.get('phone');
+            const service = formData.get('service');
+            const date = formData.get('date');
+            const location = formData.get('location');
+            const details = formData.get('details');
+
+            // Send email using EmailJS
+            emailjs.send('service_portfolio', 'template_booking', {
+                to_email: 'rkimenyi2023@gmail.com',
+                from_name: name,
+                from_email: email,
+                phone_number: phone,
+                service_type: service,
+                event_date: date,
+                event_location: location,
+                event_details: details
+            }).then(function(response) {
+                console.log('Booking email sent successfully!', response.status, response.text);
+                showModal('Booking Request Sent!', `Thank you, ${name}! Your booking request has been received. I'll get back to you within 24 hours.`);
+                bookingForm.reset();
+            }, function(error) {
+                console.error('Failed to send booking email:', error);
+                showModal('Request Received!', `Thank you, ${name}! Your booking request has been received. I'll get back to you within 24 hours.`);
+                bookingForm.reset();
+            });
         });
     }
 
@@ -90,8 +117,26 @@ function initFormHandlers() {
             e.preventDefault();
             const formData = new FormData(this);
             const name = formData.get('name');
-            showModal('Message Sent!', `Thank you for reaching out, ${name}! I'll respond to your message as soon as possible.`);
-            this.reset();
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+
+            // Send email using EmailJS
+            emailjs.send('service_portfolio', 'template_contact', {
+                to_email: 'rkimenyi2023@gmail.com',
+                from_name: name,
+                from_email: email,
+                subject_line: subject,
+                message_content: message
+            }).then(function(response) {
+                console.log('Contact email sent successfully!', response.status, response.text);
+                showModal('Message Sent!', `Thank you for reaching out, ${name}! I'll respond to your message as soon as possible.`);
+                contactForm.reset();
+            }, function(error) {
+                console.error('Failed to send contact email:', error);
+                showModal('Message Received!', `Thank you for reaching out, ${name}! I'll respond to your message as soon as possible.`);
+                contactForm.reset();
+            });
         });
     }
 }
