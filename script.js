@@ -72,7 +72,25 @@ function initModalHandlers() {
         });
     }
 }
+//gallery lightbox initialization
+const filterButtons = document.querySelectorAll('.gallery-nav button');
+const galleryItems = document.querySelectorAll('.gallery-item');
 
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            const filter = button.getAttribute('data-filter');
+
+            galleryItems.forEach(item => {
+                const category = item.getAttribute('data-category');
+                item.style.display = (filter === 'all' || category === filter)
+                    ? 'block'
+                    : 'none';
+            });
+        });
+    });
 // Form submission handlers
 function initFormHandlers() {
     const bookingForm = document.getElementById('bookingForm');
@@ -221,4 +239,30 @@ document.addEventListener('DOMContentLoaded', () => {
     initSmoothScroll();
     initScrollAnimation();
     initDateInput();
+    initGalleryToggle();
 });
+
+// Limit initial gallery display and toggle show more/less
+function initGalleryToggle() {
+    const galleryGrid = document.querySelector('.gallery-grid');
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    if (!galleryGrid || !showMoreBtn) return;
+
+    const items = galleryGrid.querySelectorAll('.gallery-item');
+    const limit = 9; // show first 9 items by default
+
+    if (items.length <= limit) {
+        showMoreBtn.style.display = 'none';
+        return;
+    }
+
+    // start collapsed
+    galleryGrid.classList.add('collapsed');
+    showMoreBtn.style.display = 'inline-block';
+    showMoreBtn.textContent = 'Show more';
+
+    showMoreBtn.addEventListener('click', () => {
+        const isCollapsed = galleryGrid.classList.toggle('collapsed');
+        showMoreBtn.textContent = isCollapsed ? 'Show more' : 'Show less';
+    });
+}
