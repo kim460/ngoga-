@@ -1,19 +1,4 @@
 :root {
-            --chocolate: #3E2723;
-            --brown: #5D4037;
-            --brown-light: #795548;
-            --caramel: #A1887F;
-            --cream: #EFEBE9;
-            --gold: #D4A574;
-            --gold-light: #E8C9A0;
-            --white: #FAFAFA;
-            --text-dark: #2D1B15;
-            --text-light: #6D4C41;
-            --shadow: rgba(62, 39, 35, 0.15);
-            --gradient: linear-gradient(135deg, var(--chocolate) 0%, var(--brown) 50%, var(--brown-light) 100%);
-        }
-
-        .dark {
             --chocolate: #1A0F0D;
             --brown: #2D1F1A;
             --brown-light: #4E342E;
@@ -25,6 +10,7 @@
             --text-dark: #EFEBE9;
             --text-light: #BCAAA4;
             --shadow: rgba(0, 0, 0, 0.4);
+            --gradient: linear-gradient(135deg, var(--chocolate) 0%, var(--brown) 50%, var(--brown-light) 100%);
         }
 
         * {

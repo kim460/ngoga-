@@ -1,18 +1,8 @@
 // Initialize EmailJS
 emailjs.init('rPAf35a_n5c89GiVj');
 
-// Dark mode detection and toggle
-if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.documentElement.classList.add('dark');
-}
-
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-    if (event.matches) {
-        document.documentElement.classList.add('dark');
-    } else {
-        document.documentElement.classList.remove('dark');
-    }
-});
+// Force dark mode always
+document.documentElement.classList.add('dark');
 
 // Mobile menu toggle
 function initMobileMenu() {
